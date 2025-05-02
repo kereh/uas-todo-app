@@ -6,12 +6,12 @@ Sebuah aplikasi manajemen tugas (To-Do) modern dan responsif yang dibangun mengg
 
 ## 🚀 Tech Stack
 
-| Teknologi       | Deskripsi                                                       |
-| --------------- | --------------------------------------------------------------- |
-| **Next.js 15**  | Framework React modern untuk aplikasi web fullstack             |
-| **tRPC**        | Komunikasi API yang type-safe tanpa REST/GraphQL                |
-| **Shadcn UI**   | Komponen UI berbasis Tailwind yang elegan & dapat dikustomisasi |
-| **Drizzle ORM** | ORM TypeScript-first yang ringan dan efisien                    |
+| Teknologi       | Deskripsi                                                       | URL                                                    |
+| --------------- | --------------------------------------------------------------- | ------------------------------------------------------ |
+| **Next.js 15**  | Framework React modern untuk aplikasi web fullstack             | [https://nextjs.org/](https://nextjs.org/)             |
+| **tRPC**        | Komunikasi API yang type-safe tanpa REST/GraphQL                | [https://trpc.io/](https://trpc.io/)                   |
+| **Shadcn UI**   | Komponen UI berbasis Tailwind yang elegan & dapat dikustomisasi | [https://ui.shadcn.com](https://ui.shadcn.com)         |
+| **Drizzle ORM** | ORM TypeScript-first yang ringan dan efisien                    | [https://orm.drizzle.team/](https://orm.drizzle.team/) |
 
 ---
 
@@ -19,7 +19,6 @@ Sebuah aplikasi manajemen tugas (To-Do) modern dan responsif yang dibangun mengg
 
 - ✅ Tambah, edit, dan hapus tugas
 - 📋 Tandai tugas sebagai selesai
-- 📆 Atur deadline dan prioritas
 - 🌙 Mode gelap dan terang
 - ⚡️ Update data secara real-time tanpa reload
 - 💅 Antarmuka bersih dan modern
@@ -32,3 +31,34 @@ Sebuah aplikasi manajemen tugas (To-Do) modern dan responsif yang dibangun mengg
 
 - **Dian Ronaldo Kereh** – `22011008`
 - **Syalomitha B.G.A Rambing** – `22011004`
+
+---
+
+## 🛠️ Cara Menjalankan Proyek
+
+1. Clone repositori ini:
+
+```bash
+git clone https://github.com/username/todo-app.git
+cd todo-app
+```
+
+2. Instal dependencies:
+
+```bash
+pnpm install
+```
+
+3. Push database schema:
+
+```bash
+pnpm db:push
+```
+
+4. Dev Server:
+
+```bash
+pnpm dev
+```
+
+---
