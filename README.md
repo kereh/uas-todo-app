@@ -1,29 +1,34 @@
-# Create T3 App
+# 📝 To-Do App – Kelompok Semester 6
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Sebuah aplikasi manajemen tugas (To-Do) modern dan responsif yang dibangun menggunakan **Next.js 15**, **tRPC**, **Shadcn UI**, dan **Drizzle ORM**. Aplikasi ini dirancang untuk mempermudah pengguna dalam mencatat, mengelola, dan menyelesaikan tugas-tugas harian mereka dengan antarmuka yang bersih dan pengalaman pengguna yang efisien.
 
-## What's next? How do I make an app with this?
+---
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## 🚀 Tech Stack
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+| Teknologi       | Deskripsi                                                       |
+| --------------- | --------------------------------------------------------------- |
+| **Next.js 15**  | Framework React modern untuk aplikasi web fullstack             |
+| **tRPC**        | Komunikasi API yang type-safe tanpa REST/GraphQL                |
+| **Shadcn UI**   | Komponen UI berbasis Tailwind yang elegan & dapat dikustomisasi |
+| **Drizzle ORM** | ORM TypeScript-first yang ringan dan efisien                    |
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+---
 
-## Learn More
+## ✨ Fitur Utama
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- ✅ Tambah, edit, dan hapus tugas
+- 📋 Tandai tugas sebagai selesai
+- 📆 Atur deadline dan prioritas
+- 🌙 Mode gelap dan terang
+- ⚡️ Update data secara real-time tanpa reload
+- 💅 Antarmuka bersih dan modern
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+---
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## 🧑‍💻 Anggota Kelompok
 
-## How do I deploy this?
+**Kelompok Semester 6**
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- **Dian Ronaldo Kereh** – `22011008`
+- **Syalomitha B.G.A Rambing** – `22011004`
