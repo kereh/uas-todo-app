@@ -1,8 +1,9 @@
 "use client";
 
 import * as React from "react";
+import { useSession } from "next-auth/react";
+import { CommandIcon } from "lucide-react";
 import { SidebarMain } from "@/components/sidebar/sidebar-main";
-import { SidebarSecondary } from "@/components/sidebar/sidebar-secondary";
 import { SidebarUser } from "@/components/sidebar/sidebar-user";
 import {
   Sidebar,
@@ -13,10 +14,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { menus } from "./sidebar-menus";
-import { CommandIcon } from "lucide-react";
+import { menus } from "@/components/sidebar/sidebar";
 
 export function SidebarApp({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data, status } = useSession();
+
   return (
     <Sidebar variant="floating" {...props}>
       <SidebarHeader>
@@ -37,10 +39,9 @@ export function SidebarApp({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <SidebarMain items={menus.navMain} />
-        <SidebarSecondary items={menus.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <SidebarUser user={menus.user} />
+        <SidebarUser user={data?.user} status={status} />
       </SidebarFooter>
     </Sidebar>
   );
