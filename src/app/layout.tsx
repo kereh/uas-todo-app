@@ -5,8 +5,9 @@ import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { SidebarApp } from "@/components/sidebar/sidebar-app";
+import { HeaderMain } from "@/components/header/header-main";
 
 export const metadata: Metadata = {
   title: "To-Do App",
@@ -34,10 +35,12 @@ export default function RootLayout({
           <TRPCReactProvider>
             <SidebarProvider>
               <SidebarApp />
-              <main>
-                <SidebarTrigger />
-                {children}
-              </main>
+              <SidebarInset>
+                <main className="container p-4">
+                  <HeaderMain />
+                  {children}
+                </main>
+              </SidebarInset>
             </SidebarProvider>
           </TRPCReactProvider>
         </ThemeProvider>
