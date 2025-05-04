@@ -20,8 +20,8 @@ Sebuah aplikasi manajemen tugas (To-Do) modern dan responsif yang dibangun mengg
 - ✅ Tambah, edit, dan hapus tugas
 - 📋 Tandai tugas sebagai selesai
 - 🌙 Mode gelap dan terang
-- ⚡️ Update data secara real-time tanpa reload
-- 💅 Antarmuka bersih dan modern
+- ⚡️ Update data secara real-time
+- 💅 Antarmuka bersih dan simple
 
 ---
 
@@ -34,7 +34,7 @@ Sebuah aplikasi manajemen tugas (To-Do) modern dan responsif yang dibangun mengg
 
 ---
 
-## 🛠️ Cara Menjalankan Proyek
+## 🛠️ Cara Menjalankan To-Do App
 
 1. Clone repositori ini:
 
