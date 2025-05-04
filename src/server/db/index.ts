@@ -1,18 +1,14 @@
-import { drizzle } from "drizzle-orm/mysql2";
-import { createPool, type Pool } from "mysql2/promise";
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
 
 import { env } from "@/env";
-import * as schema from "./schema";
+import * as schema from "@/server/db/schema";
 
-/**
- * Cache the database connection in development. This avoids creating a new connection on every HMR
- * update.
- */
 const globalForDb = globalThis as unknown as {
-  conn: Pool | undefined;
+  conn: ReturnType<typeof neon> | undefined;
 };
 
-const conn = globalForDb.conn ?? createPool({ uri: env.DATABASE_URL });
+const conn = globalForDb.conn ?? neon(env.DATABASE_URL);
 if (env.NODE_ENV !== "production") globalForDb.conn = conn;
 
-export const db = drizzle(conn, { schema, mode: "default" });
+export const db = drizzle(conn, { schema });
