@@ -6,7 +6,7 @@ Sebuah aplikasi manajemen tugas (To-Do) modern dan responsif yang dibangun mengg
 
 ## 🚀 Tech Stack
 
-| Teknologi       | Deskripsi                                                       | URL                                                    |
+| Tech            | Deskripsi                                                       | URL                                                    |
 | --------------- | --------------------------------------------------------------- | ------------------------------------------------------ |
 | **Next.js 15**  | Framework React modern untuk aplikasi web fullstack             | [https://nextjs.org/](https://nextjs.org/)             |
 | **tRPC**        | Komunikasi API yang type-safe tanpa REST/GraphQL                | [https://trpc.io/](https://trpc.io/)                   |
