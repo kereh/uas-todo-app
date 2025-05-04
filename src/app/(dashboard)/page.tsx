@@ -1,3 +1,91 @@
+"use client";
+
+import * as Sortable from "@/components/ui/sortable";
+import * as React from "react";
+
+interface Trick {
+  id: string;
+  title: string;
+  description: string;
+}
+
 export default function Page() {
-  return <div>content here</div>;
+  const [tricks, setTricks] = React.useState<Trick[]>([
+    {
+      id: "1",
+      title: "The 900",
+      description: "The 900 is a trick where you spin 900 degrees in the air.",
+    },
+    {
+      id: "2",
+      title: "Indy Backflip",
+      description:
+        "The Indy Backflip is a trick where you backflip in the air.",
+    },
+    {
+      id: "3",
+      title: "Pizza Guy",
+      description: "The Pizza Guy is a trick where you flip the pizza guy.",
+    },
+    {
+      id: "4",
+      title: "Rocket Air",
+      description: "The Rocket Air is a trick where you rocket air.",
+    },
+    {
+      id: "5",
+      title: "Kickflip Backflip",
+      description:
+        "The Kickflip Backflip is a trick where you kickflip backflip.",
+    },
+    {
+      id: "6",
+      title: "FS 540",
+      description: "The FS 540 is a trick where you fs 540.",
+    },
+  ]);
+
+  return (
+    <Sortable.Root
+      value={tricks}
+      onValueChange={setTricks}
+      getItemValue={(item) => item.id}
+      orientation="mixed"
+    >
+      <Sortable.Content className="grid auto-rows-fr grid-cols-3 gap-2.5">
+        {tricks.map((trick) => (
+          <TrickCard key={trick.id} trick={trick} asHandle />
+        ))}
+      </Sortable.Content>
+      <Sortable.Overlay>
+        {(activeItem) => {
+          const trick = tricks.find((trick) => trick.id === activeItem.value);
+
+          if (!trick) return null;
+
+          return <TrickCard trick={trick} />;
+        }}
+      </Sortable.Overlay>
+    </Sortable.Root>
+  );
+}
+
+interface TrickCardProps
+  extends Omit<React.ComponentPropsWithoutRef<typeof Sortable.Item>, "value"> {
+  trick: Trick;
+}
+
+function TrickCard({ trick, ...props }: TrickCardProps) {
+  return (
+    <Sortable.Item value={trick.id} asChild {...props}>
+      <div className="text-foreground flex size-full flex-col gap-1 rounded-md border bg-zinc-100 p-4 shadow-sm dark:bg-zinc-900">
+        <div className="text-sm leading-tight font-medium sm:text-base">
+          {trick.title}
+        </div>
+        <span className="text-muted-foreground line-clamp-2 hidden text-sm sm:inline-block">
+          {trick.description}
+        </span>
+      </div>
+    </Sortable.Item>
+  );
 }

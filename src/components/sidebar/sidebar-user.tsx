@@ -3,12 +3,11 @@
 import type { DefaultSession } from "next-auth";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Cog, ChevronsUpDown, LogOut } from "lucide-react";
+import { ChevronsUpDown, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -122,7 +121,9 @@ export function SidebarUser({
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Batal</AlertDialogCancel>
-                  <AlertDialogAction onClick={() => signOut()}>
+                  <AlertDialogAction
+                    onClick={() => signOut({ redirectTo: "/login" })}
+                  >
                     Lanjutkan
                   </AlertDialogAction>
                 </AlertDialogFooter>

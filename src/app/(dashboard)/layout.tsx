@@ -1,6 +1,6 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { SidebarApp } from "@/components/sidebar/sidebar-app";
-import { HeaderMain } from "@/components/header/header-main";
+import { BreadCrumbsMain } from "@/components/breadcrumbs/breadcrumbs-main";
 
 export default function DashboardLayout({
   children,
@@ -10,7 +10,7 @@ export default function DashboardLayout({
       <SidebarProvider>
         <SidebarApp />
         <SidebarInset>
-          <HeaderMain />
+          <BreadCrumbsMain />
           <main className="container p-4">{children}</main>
         </SidebarInset>
       </SidebarProvider>
