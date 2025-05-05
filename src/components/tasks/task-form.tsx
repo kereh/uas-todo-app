@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { Check } from "lucide-react";
 
 export function TaskForm({ className }: React.ComponentProps<"form">) {
   const utils = api.useUtils();
@@ -16,7 +17,8 @@ export function TaskForm({ className }: React.ComponentProps<"form">) {
       await utils.tasks.invalidate();
       setTask("");
       toast("Success", {
-        description: "The new task has been added",
+        icon: <Check />,
+        description: `The new task has been added at ${new Date()}`,
       });
     },
   });

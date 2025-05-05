@@ -5,10 +5,18 @@ import {
   publicProcedure,
 } from "@/server/api/trpc";
 import { tasks } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 
 export const tasksRouter = createTRPCRouter({
   getAllTask: protectedProcedure.query(async ({ ctx }) => {
-    return "hi";
+    return await ctx.db.query.tasks.findMany({
+      columns: {
+        id: true,
+        task: true,
+        isComplete: true,
+      },
+      where: eq(tasks.createdBy, ctx.session.user.id),
+    });
   }),
   addNewTask: protectedProcedure
     .input(
@@ -17,7 +25,7 @@ export const tasksRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await ctx.db.insert(tasks).values({
+      return await ctx.db.insert(tasks).values({
         task: input.task,
         createdBy: ctx.session.user.id,
       });
