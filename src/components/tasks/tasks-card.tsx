@@ -2,7 +2,7 @@ import { memo } from "react";
 import type { Task } from "@/types";
 import { cn } from "@/lib/utils";
 import * as Sortable from "@/components/ui/sortable";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, SlidersHorizontal } from "lucide-react";
 
