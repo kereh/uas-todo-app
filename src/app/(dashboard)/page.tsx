@@ -31,7 +31,7 @@ export default function Page() {
         {isLoading ? (
           "loading..."
         ) : (
-          <Sortable.Content className="grid auto-rows-fr grid-cols-3 gap-2.5 rounded-md">
+          <Sortable.Content className="grid auto-rows-fr grid-cols-3 gap-3 rounded-md">
             {tasks?.map((task) => (
               <TasksCard
                 key={task.id}
