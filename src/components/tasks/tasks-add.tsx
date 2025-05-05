@@ -19,7 +19,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { TaskForm } from "./task-form";
+import { TasksForm } from "@/components/tasks/tasks-form";
 
 export function TasksAdd() {
   const [open, setOpen] = React.useState(false);
@@ -36,7 +36,7 @@ export function TasksAdd() {
             <DialogTitle>Add Task</DialogTitle>
             <DialogDescription>You can add a new task here</DialogDescription>
           </DialogHeader>
-          <TaskForm />
+          <TasksForm />
         </DialogContent>
       </Dialog>
     );
@@ -52,7 +52,7 @@ export function TasksAdd() {
           <DrawerTitle>Add Task</DrawerTitle>
           <DrawerDescription>You can add a new task here</DrawerDescription>
         </DrawerHeader>
-        <TaskForm className="px-4" />
+        <TasksForm className="px-4" />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Batal</Button>

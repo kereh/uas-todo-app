@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { Check } from "lucide-react";
 
-export function TaskForm({ className }: React.ComponentProps<"form">) {
+export function TasksForm({ className }: React.ComponentProps<"form">) {
   const utils = api.useUtils();
   const [task, setTask] = React.useState<string>("");
   const newTask = api.tasks.addNewTask.useMutation({
