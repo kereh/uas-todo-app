@@ -51,7 +51,7 @@ export function SidebarUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               {status == "loading" ? (
-                "Memuat data pengguna..."
+                "Loading User Data..."
               ) : (
                 <Avatar className="h-8 w-8 rounded-lg">
                   {user?.image ? (
@@ -113,18 +113,17 @@ export function SidebarUser({
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Konfirmasi Log out</AlertDialogTitle>
+                  <AlertDialogTitle>Log out Confirmation</AlertDialogTitle>
                   <AlertDialogDescription>
-                    Tekan 'Lanjutkan' untuk Log out dan 'Batal' untuk
-                    membatalkan Log out.
+                    Press 'Continue' to Log out and 'Cancel' to abort.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Batal</AlertDialogCancel>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction
                     onClick={() => signOut({ redirectTo: "/login" })}
                   >
-                    Lanjutkan
+                    Continue
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

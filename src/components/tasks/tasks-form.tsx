@@ -17,7 +17,7 @@ export function TasksForm({ className }: React.ComponentProps<"form">) {
       await utils.tasks.invalidate();
       setTask("");
       toast("Success", {
-        icon: <Check />,
+        icon: <Check className="mr-2 h-4 w-4" />,
         description: `The new task has been added at ${new Date()}`,
       });
     },

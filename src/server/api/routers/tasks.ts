@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "@/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { tasks } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 
@@ -29,5 +25,14 @@ export const tasksRouter = createTRPCRouter({
         task: input.task,
         createdBy: ctx.session.user.id,
       });
+    }),
+  deleteTask: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.delete(tasks).where(eq(tasks.id, input.id));
     }),
 });
