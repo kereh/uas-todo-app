@@ -8,10 +8,12 @@ export interface SidebarMainProps {
   }>;
 }
 
+export interface Task {
+  id: string;
+  task: string;
+  isComplete: boolean;
+}
+
 export interface Tasks {
-  tasks: Array<{
-    id: string;
-    task: string;
-    isComplete: boolean;
-  }>;
+  tasks: Array<Task>;
 }
