@@ -12,7 +12,7 @@ export const tasks = createTable("tasks", (d) => ({
     .notNull()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  task: d.varchar({ length: 255 }),
+  task: d.varchar({ length: 50 }),
   isComplete: d.boolean().default(false),
   createdBy: d.varchar({ length: 255 }).notNull(),
 }));
