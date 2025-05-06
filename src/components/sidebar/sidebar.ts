@@ -1,4 +1,8 @@
-import { LifeBuoy, Send, SquareTerminal } from "lucide-react";
+import {
+  MessageCircleQuestion,
+  SquareTerminal,
+  ShieldQuestion,
+} from "lucide-react";
 
 export const menus = {
   navMain: [
@@ -8,17 +12,17 @@ export const menus = {
       icon: SquareTerminal,
       isActive: true,
     },
-  ],
-  navSecondary: [
     {
-      title: "Support",
-      url: "#",
-      icon: LifeBuoy,
+      title: "Ask Developer",
+      url: "https://wa.me/6289612225233",
+      icon: MessageCircleQuestion,
+      isActive: false,
     },
     {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
+      title: "About This",
+      url: "https://github.com/kereh/uas-todo-app/blob/main/README.md",
+      icon: ShieldQuestion,
+      isActive: false,
     },
   ],
 };

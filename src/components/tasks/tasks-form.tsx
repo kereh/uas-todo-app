@@ -10,8 +10,11 @@ import { toast } from "sonner";
 import { Check } from "lucide-react";
 
 export function TasksForm({ className }: React.ComponentProps<"form">) {
-  const utils = api.useUtils();
   const [task, setTask] = React.useState<string>("");
+  const [limit, setLimit] = React.useState<boolean>(false);
+
+  const utils = api.useUtils();
+
   const newTask = api.tasks.addNewTask.useMutation({
     onSuccess: async () => {
       await utils.tasks.invalidate();
@@ -22,8 +25,18 @@ export function TasksForm({ className }: React.ComponentProps<"form">) {
       });
     },
   });
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (task.length > 30) {
+      toast("Fail", {
+        icon: <Check className="mr-2 h-4 w-4" />,
+        description: `The new task character count cant be more than 30`,
+      });
+
+      return;
+    }
     newTask.mutate({ task: task });
   };
 
@@ -41,6 +54,7 @@ export function TasksForm({ className }: React.ComponentProps<"form">) {
           value={task}
           onChange={(e) => setTask(e.currentTarget.value)}
           required
+          disabled={newTask.isPending}
         />
       </div>
       <Button type="submit" disabled={newTask.isPending}>
