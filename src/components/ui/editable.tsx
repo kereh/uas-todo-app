@@ -388,7 +388,7 @@ const EditablePreview = React.forwardRef<HTMLDivElement, EditablePreviewProps>(
           context.triggerMode === "focus" ? onTrigger : undefined,
         )}
         className={cn(
-          "focus-visible:ring-ring data-empty:text-muted-foreground cursor-text truncate rounded-sm border border-transparent py-1 text-base focus-visible:ring-1 focus-visible:outline-hidden data-disabled:cursor-not-allowed data-disabled:opacity-50 data-readonly:cursor-default md:text-base",
+          "focus-visible:ring-ring data-empty:text-muted-foreground cursor-text truncate rounded-sm border border-transparent text-base focus-visible:ring-1 focus-visible:outline-hidden data-disabled:cursor-not-allowed data-disabled:opacity-50 data-readonly:cursor-default md:text-base",
           className,
         )}
       >

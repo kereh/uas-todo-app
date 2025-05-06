@@ -13,6 +13,7 @@ export default function Page() {
         <TasksAdd />
       </div>
       <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3">
+        {!isLoading && data?.length === 0 && <p>No tasks found.</p>}
         {isLoading
           ? "Loading Tasks..."
           : data?.map((task) => (

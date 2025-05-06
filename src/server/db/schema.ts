@@ -2,8 +2,6 @@ import { relations, sql } from "drizzle-orm";
 import { index, pgTableCreator, primaryKey } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
-// 7fe0b066-26c5-4236-a2ff-ed5508832b76
-
 export const createTable = pgTableCreator((name) => `todo-app_${name}`);
 
 export const tasks = createTable("tasks", (d) => ({
@@ -12,7 +10,7 @@ export const tasks = createTable("tasks", (d) => ({
     .notNull()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  task: d.varchar({ length: 50 }),
+  task: d.varchar({ length: 30 }),
   isComplete: d.boolean().default(false),
   createdBy: d.varchar({ length: 255 }).notNull(),
 }));

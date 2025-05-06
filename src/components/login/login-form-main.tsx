@@ -19,7 +19,7 @@ export function LoginFormMain({
           </a>
           <h1 className="text-xl font-bold">To-Do App</h1>
           <div className="text-center text-sm">
-            Silahkan login menggunakan provider dibawah
+            Welcome Back! Sign-in to create your todo list.
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -76,10 +76,10 @@ export function LoginFormMain({
           </form>
         </div>
       </div>
-      <div className="text-muted-foreground hover:[&_a]:text-primary text-center text-xs text-balance [&_a]:underline [&_a]:underline-offset-4">
+      {/* <div className="text-muted-foreground hover:[&_a]:text-primary text-center text-xs text-balance [&_a]:underline [&_a]:underline-offset-4">
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
         and <a href="#">Privacy Policy</a>.
-      </div>
+      </div> */}
     </div>
   );
 }

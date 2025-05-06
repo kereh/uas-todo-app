@@ -13,9 +13,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Trash2, Activity, Pencil, Check, CircleCheck } from "lucide-react";
+import {
+  Trash2,
+  Activity,
+  Pencil,
+  Check,
+  CircleCheck,
+  Undo,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
@@ -50,21 +58,30 @@ export function TasksCard({ id, task, isComplete }: Task) {
     },
   });
 
+  if (!task) {
+    return (
+      <div className="border-muted flex items-center justify-between rounded-lg border p-4">
+        <Skeleton className="h-4 w-[200px]" />
+        <Skeleton className="h-8 w-8 rounded-full" />
+      </div>
+    );
+  }
+
   return (
-    <Card className="w-full p-0 transition-all hover:shadow-md">
+    <Card className="relative w-full p-0 transition-all hover:shadow-md">
       <Editable.Root defaultValue={task!} placeholder="Enter your text here">
         <CardContent className="pt-6">
-          <div className="mb-3 flex items-center gap-4">
-            {isComplete ? (
-              <CircleCheck className="h-6 w-6 text-green-500" />
-            ) : (
-              <Activity className="h-4 w-4 text-blue-500" />
-            )}
-            <div className="flex-1">
-              <Editable.Area>
+          <div className="flex items-center gap-4">
+            <div className="">
+              <Editable.Area className="flex items-center gap-4">
+                {isComplete ? (
+                  <CircleCheck className="h-5 w-5 text-green-500" />
+                ) : (
+                  <Activity className="h-5 w-5 text-blue-500" />
+                )}
                 <Editable.Preview
                   className={cn(
-                    "cursor-pointer text-xl font-medium",
+                    "text-muted-foreground cursor-pointer font-medium",
                     isComplete && "text-muted-foreground line-through",
                   )}
                 />
@@ -103,7 +120,7 @@ export function TasksCard({ id, task, isComplete }: Task) {
                   undoTask.isPending
                 }
               >
-                <Check className="h-5 w-5" />
+                <Undo className="h-5 w-5" />
                 <span className="sr-only">Undo</span>
               </Button>
             ) : (
@@ -145,7 +162,11 @@ export function TasksCard({ id, task, isComplete }: Task) {
                   size="sm"
                   onClick={(): void => {}}
                   className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                  disabled={deleteTask.isPending || completeTask.isPending}
+                  disabled={
+                    deleteTask.isPending ||
+                    completeTask.isPending ||
+                    undoTask.isPending
+                  }
                 >
                   <Trash2 className="h-4 w-4" />
                   <span className="sr-only">Delete todo</span>
