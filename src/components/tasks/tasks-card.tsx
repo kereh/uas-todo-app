@@ -1,6 +1,7 @@
 "use client";
 
 import type { Task } from "@/types";
+import * as Editable from "@/components/ui/editable";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -33,89 +34,104 @@ export function TasksCard({ id, task, isComplete }: Task) {
 
   return (
     <Card className="w-full p-0 transition-all hover:shadow-md">
-      <CardContent className="pt-6">
-        <div className="mb-3 flex items-center gap-4">
-          {isComplete ? (
-            <CircleCheck className="h-6 w-6 text-green-500" />
-          ) : (
-            <Activity className="h-4 w-4 text-blue-500" />
-          )}
-          <div className="flex-1">
-            <label
-              className={cn(
-                "cursor-pointer text-base font-medium",
-                isComplete && "text-muted-foreground line-through",
-              )}
-            >
-              {task}
-            </label>
-            <p
-              className={cn(
-                "text-muted-foreground mt-1 text-xs",
-                isComplete ? "text-green-500" : "text-blue-500",
-              )}
-            >
-              {isComplete ? "Completed" : "Progress"}
-            </p>
+      <Editable.Root defaultValue={task!} placeholder="Enter your text here">
+        <CardContent className="pt-6">
+          <div className="mb-3 flex items-center gap-4">
+            {isComplete ? (
+              <CircleCheck className="h-6 w-6 text-green-500" />
+            ) : (
+              <Activity className="h-4 w-4 text-blue-500" />
+            )}
+            <div className="flex-1">
+              <Editable.Area>
+                <Editable.Preview
+                  className={cn(
+                    "cursor-pointer text-xl font-medium",
+                    isComplete && "text-muted-foreground line-through",
+                  )}
+                />
+                <Editable.Input />
+              </Editable.Area>
+              <Editable.Toolbar>
+                <Editable.Submit asChild>
+                  <Button size="sm">Save</Button>
+                </Editable.Submit>
+                <Editable.Cancel asChild>
+                  <Button variant="outline" size="sm">
+                    Cancel
+                  </Button>
+                </Editable.Cancel>
+              </Editable.Toolbar>
+              <p
+                className={cn(
+                  "text-muted-foreground mt-1 text-xs",
+                  isComplete ? "text-green-500" : "text-blue-500",
+                )}
+              >
+                {isComplete ? "Completed" : "Progress"}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="flex w-full justify-end gap-4 border-t py-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={(): void => {}}
-            className="text-muted-foreground"
-            disabled={deleteTask.isPending}
-          >
-            <Check className="h-5 w-5" />
-            <span className="sr-only">Mark As Complete</span>
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={(): void => {}}
-            className="text-muted-foreground"
-            disabled={deleteTask.isPending}
-          >
-            <Pencil className="h-4 w-4" />
-            <span className="sr-only">Edit</span>
-          </Button>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
+          <div className="flex w-full justify-end gap-4 border-t py-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={(): void => {}}
+              className="text-muted-foreground"
+              disabled={deleteTask.isPending}
+            >
+              <Check className="h-5 w-5" />
+              <span className="sr-only">Mark As Complete</span>
+            </Button>
+            <Editable.Trigger asChild>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={(): void => {}}
-                className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                className="text-muted-foreground"
                 disabled={deleteTask.isPending}
               >
-                <Trash2 className="h-4 w-4" />
-                <span className="sr-only">Delete todo</span>
+                <Pencil className="h-4 w-4" />
+                <span className="sr-only">Edit</span>
               </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel disabled={deleteTask.isPending}>
-                  Cancel
-                </AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={() => deleteTask.mutate({ id: id })}
+            </Editable.Trigger>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={(): void => {}}
+                  className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                   disabled={deleteTask.isPending}
                 >
-                  Continue
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
-      </CardContent>
+                  <Trash2 className="h-4 w-4" />
+                  <span className="sr-only">Delete todo</span>
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your account and remove your data from our servers.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel disabled={deleteTask.isPending}>
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => deleteTask.mutate({ id: id })}
+                    disabled={deleteTask.isPending}
+                  >
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        </CardContent>
+      </Editable.Root>
     </Card>
   );
 }

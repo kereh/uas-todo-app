@@ -14,7 +14,7 @@ export default function Page() {
       </div>
       <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3">
         {isLoading
-          ? "Loading..."
+          ? "Loading Tasks..."
           : data?.map((task) => (
               <TasksCard
                 key={task.id}
