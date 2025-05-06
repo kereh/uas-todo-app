@@ -32,6 +32,7 @@ import React, { useState } from "react";
 export function TasksCard({ id, task, isComplete }: Task) {
   const [newTaskValue, setNewTaskValue] = useState<string>(task || "");
   const [isInputInvalid, setIsInputInvalid] = useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   const utils = api.useUtils();
 
@@ -66,6 +67,8 @@ export function TasksCard({ id, task, isComplete }: Task) {
     updateTask.isPending;
 
   const handleTaskUpdate = async (taskToSave: string) => {
+    setIsEdit(false);
+
     if (taskToSave.length > 30) {
       toast("Failed", {
         icon: <Check className="mr-2 h-4 w-4" />,
@@ -96,6 +99,8 @@ export function TasksCard({ id, task, isComplete }: Task) {
       <Editable.Root
         defaultValue={task}
         onSubmit={() => handleTaskUpdate(newTaskValue)}
+        onEdit={() => setIsEdit(true)}
+        onCancel={() => setIsEdit(false)}
         placeholder="Enter your task here"
         disabled={isInputInvalid}
       >
@@ -155,7 +160,7 @@ export function TasksCard({ id, task, isComplete }: Task) {
                 size="sm"
                 onClick={() => undoTask.mutate({ id })}
                 className="text-muted-foreground"
-                disabled={isLoading || isInputInvalid}
+                disabled={isLoading || isInputInvalid || isEdit}
               >
                 <Undo className="h-5 w-5" />
                 <span className="sr-only">Undo</span>
@@ -166,7 +171,7 @@ export function TasksCard({ id, task, isComplete }: Task) {
                 size="sm"
                 onClick={() => completeTask.mutate({ id })}
                 className="text-muted-foreground"
-                disabled={isLoading || isInputInvalid}
+                disabled={isLoading || isInputInvalid || isEdit}
               >
                 <Check className="h-5 w-5" />
                 <span className="sr-only">Mark As Complete</span>
@@ -177,7 +182,7 @@ export function TasksCard({ id, task, isComplete }: Task) {
                 variant="outline"
                 size="sm"
                 className="text-muted-foreground"
-                disabled={isLoading || isInputInvalid}
+                disabled={isLoading || isInputInvalid || isEdit}
               >
                 <Pencil className="h-4 w-4" />
                 <span className="sr-only">Edit</span>
@@ -189,7 +194,7 @@ export function TasksCard({ id, task, isComplete }: Task) {
                   variant="outline"
                   size="sm"
                   className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                  disabled={isLoading || isInputInvalid}
+                  disabled={isLoading || isInputInvalid || isEdit}
                 >
                   <Trash2 className="h-4 w-4" />
                   <span className="sr-only">Delete todo</span>
