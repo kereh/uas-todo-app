@@ -26,6 +26,21 @@ export const tasksRouter = createTRPCRouter({
         createdBy: ctx.session.user.id,
       });
     }),
+  updateTask: protectedProcedure
+    .input(
+      z.object({
+        task: z.string(),
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db
+        .update(tasks)
+        .set({
+          task: input.task,
+        })
+        .where(eq(tasks.id, input.id));
+    }),
   deleteTask: protectedProcedure
     .input(
       z.object({

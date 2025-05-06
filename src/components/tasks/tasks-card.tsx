@@ -27,9 +27,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
+import { useState } from "react";
 
 export function TasksCard({ id, task, isComplete }: Task) {
+  const [newTaskValue, setNewTaskValue] = useState("");
   const utils = api.useUtils();
+
   const deleteTask = api.tasks.deleteTask.useMutation({
     onSuccess: async () => {
       await utils.tasks.invalidate();
@@ -39,6 +42,7 @@ export function TasksCard({ id, task, isComplete }: Task) {
       });
     },
   });
+
   const completeTask = api.tasks.completeTask.useMutation({
     onSuccess: async () => {
       await utils.tasks.invalidate();
@@ -48,6 +52,7 @@ export function TasksCard({ id, task, isComplete }: Task) {
       });
     },
   });
+
   const undoTask = api.tasks.undoTask.useMutation({
     onSuccess: async () => {
       await utils.tasks.invalidate();
@@ -57,6 +62,23 @@ export function TasksCard({ id, task, isComplete }: Task) {
       });
     },
   });
+
+  const updateTask = api.tasks.updateTask.useMutation({
+    onSuccess: async () => {
+      await utils.tasks.invalidate();
+      toast("Success", {
+        icon: <Check className="mr-2 h-4 w-4" />,
+        description: `The task has been updated at ${new Date()}`,
+      });
+    },
+  });
+
+  const handleTaskUpdate = ({ id, task }: { id: string; task: string }) => {
+    updateTask.mutate({
+      id: id,
+      task: task,
+    });
+  };
 
   if (!task) {
     return (
@@ -69,7 +91,11 @@ export function TasksCard({ id, task, isComplete }: Task) {
 
   return (
     <Card className="relative w-full p-0 transition-all hover:shadow-md">
-      <Editable.Root defaultValue={task!} placeholder="Enter your text here">
+      <Editable.Root
+        defaultValue={task!}
+        onSubmit={() => handleTaskUpdate({ id: id, task: newTaskValue })}
+        placeholder="Enter your text here"
+      >
         <CardContent className="pt-6">
           <div className="flex items-center gap-4">
             <div className="">
@@ -85,7 +111,9 @@ export function TasksCard({ id, task, isComplete }: Task) {
                     isComplete && "text-muted-foreground line-through",
                   )}
                 />
-                <Editable.Input />
+                <Editable.Input
+                  onChange={(e) => setNewTaskValue(e.currentTarget.value)}
+                />
               </Editable.Area>
               <Editable.Toolbar>
                 <Editable.Submit asChild>
@@ -117,7 +145,8 @@ export function TasksCard({ id, task, isComplete }: Task) {
                 disabled={
                   deleteTask.isPending ||
                   completeTask.isPending ||
-                  undoTask.isPending
+                  undoTask.isPending ||
+                  updateTask.isPending
                 }
               >
                 <Undo className="h-5 w-5" />
@@ -132,7 +161,8 @@ export function TasksCard({ id, task, isComplete }: Task) {
                 disabled={
                   deleteTask.isPending ||
                   completeTask.isPending ||
-                  undoTask.isPending
+                  undoTask.isPending ||
+                  updateTask.isPending
                 }
               >
                 <Check className="h-5 w-5" />
@@ -143,12 +173,12 @@ export function TasksCard({ id, task, isComplete }: Task) {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={(): void => {}}
                 className="text-muted-foreground"
                 disabled={
                   deleteTask.isPending ||
                   completeTask.isPending ||
-                  undoTask.isPending
+                  undoTask.isPending ||
+                  updateTask.isPending
                 }
               >
                 <Pencil className="h-4 w-4" />
