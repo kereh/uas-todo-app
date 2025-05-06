@@ -115,7 +115,7 @@ export function TasksCard({ id, task, isComplete }: Task) {
                 )}
                 <Editable.Preview
                   className={cn(
-                    "text-muted-foreground cursor-pointer font-medium",
+                    "text-foreground cursor-pointer font-medium",
                     isComplete && "text-muted-foreground line-through",
                   )}
                 />
