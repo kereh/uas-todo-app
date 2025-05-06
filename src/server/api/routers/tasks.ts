@@ -35,4 +35,32 @@ export const tasksRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.delete(tasks).where(eq(tasks.id, input.id));
     }),
+  completeTask: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db
+        .update(tasks)
+        .set({
+          isComplete: true,
+        })
+        .where(eq(tasks.id, input.id));
+    }),
+  undoTask: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db
+        .update(tasks)
+        .set({
+          isComplete: false,
+        })
+        .where(eq(tasks.id, input.id));
+    }),
 });

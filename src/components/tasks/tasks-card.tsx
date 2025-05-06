@@ -31,6 +31,24 @@ export function TasksCard({ id, task, isComplete }: Task) {
       });
     },
   });
+  const completeTask = api.tasks.completeTask.useMutation({
+    onSuccess: async () => {
+      await utils.tasks.invalidate();
+      toast("Success", {
+        icon: <Check className="mr-2 h-4 w-4" />,
+        description: `The task has been completed at ${new Date()}`,
+      });
+    },
+  });
+  const undoTask = api.tasks.undoTask.useMutation({
+    onSuccess: async () => {
+      await utils.tasks.invalidate();
+      toast("Success", {
+        icon: <Check className="mr-2 h-4 w-4" />,
+        description: `The task has been updated at ${new Date()}`,
+      });
+    },
+  });
 
   return (
     <Card className="w-full p-0 transition-all hover:shadow-md">
@@ -62,34 +80,59 @@ export function TasksCard({ id, task, isComplete }: Task) {
                   </Button>
                 </Editable.Cancel>
               </Editable.Toolbar>
-              <p
-                className={cn(
-                  "text-muted-foreground mt-1 text-xs",
-                  isComplete ? "text-green-500" : "text-blue-500",
-                )}
-              >
-                {isComplete ? "Completed" : "Progress"}
-              </p>
             </div>
           </div>
-          <div className="flex w-full justify-end gap-4 border-t py-4">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={(): void => {}}
-              className="text-muted-foreground"
-              disabled={deleteTask.isPending}
+          <div className="flex w-full items-center justify-start gap-4 py-4">
+            <p
+              className={cn(
+                "text-muted-foreground justify-start rounded-md border bg-current/10 px-3 py-1 text-xs",
+                isComplete ? "text-green-500" : "text-blue-500",
+              )}
             >
-              <Check className="h-5 w-5" />
-              <span className="sr-only">Mark As Complete</span>
-            </Button>
+              {isComplete ? "Completed" : "Progress"}
+            </p>
+            {isComplete ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => undoTask.mutate({ id: id })}
+                className="text-muted-foreground"
+                disabled={
+                  deleteTask.isPending ||
+                  completeTask.isPending ||
+                  undoTask.isPending
+                }
+              >
+                <Check className="h-5 w-5" />
+                <span className="sr-only">Undo</span>
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => completeTask.mutate({ id: id })}
+                className="text-muted-foreground"
+                disabled={
+                  deleteTask.isPending ||
+                  completeTask.isPending ||
+                  undoTask.isPending
+                }
+              >
+                <Check className="h-5 w-5" />
+                <span className="sr-only">Mark As Complete</span>
+              </Button>
+            )}
             <Editable.Trigger asChild>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={(): void => {}}
                 className="text-muted-foreground"
-                disabled={deleteTask.isPending}
+                disabled={
+                  deleteTask.isPending ||
+                  completeTask.isPending ||
+                  undoTask.isPending
+                }
               >
                 <Pencil className="h-4 w-4" />
                 <span className="sr-only">Edit</span>
@@ -102,7 +145,7 @@ export function TasksCard({ id, task, isComplete }: Task) {
                   size="sm"
                   onClick={(): void => {}}
                   className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                  disabled={deleteTask.isPending}
+                  disabled={deleteTask.isPending || completeTask.isPending}
                 >
                   <Trash2 className="h-4 w-4" />
                   <span className="sr-only">Delete todo</span>
