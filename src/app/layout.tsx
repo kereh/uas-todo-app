@@ -26,7 +26,12 @@ export default function DashboardLayout({
   return (
     <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <SessionProvider>
             <TRPCReactProvider>{children}</TRPCReactProvider>
           </SessionProvider>
