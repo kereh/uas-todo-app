@@ -4,6 +4,7 @@ export interface SidebarMainProps {
   items: Array<{
     title: string;
     url: string;
+    isActive?: boolean;
     icon?: LucideIcon;
   }>;
 }
