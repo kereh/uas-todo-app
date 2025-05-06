@@ -53,6 +53,7 @@ export function TasksForm({ className }: React.ComponentProps<"form">) {
           onChange={(e) => setTask(e.currentTarget.value)}
           required
           disabled={newTask.isPending}
+          autoComplete="off"
         />
       </div>
       <Button type="submit" disabled={newTask.isPending}>

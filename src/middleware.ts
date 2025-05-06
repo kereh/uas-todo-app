@@ -20,3 +20,10 @@ export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/(api|trpc)(.*)"],
   runtime: "nodejs",
 };
+
+// RS Siloam Sonder
+// KPU Kota Tomohon
+// Dinas Sosial Kota Tomohon
+// Dinas Kependudukan dan Pencatatan Sipil Kota Tomohon
+// Alfamart
+// BPJS Kesehatan Kota Tomohon
