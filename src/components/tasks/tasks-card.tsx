@@ -27,57 +27,59 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export function TasksCard({ id, task, isComplete }: Task) {
-  const [newTaskValue, setNewTaskValue] = useState("");
+  const [newTaskValue, setNewTaskValue] = useState<string>(task || "");
+  const [isInputInvalid, setIsInputInvalid] = useState<boolean>(false);
+
   const utils = api.useUtils();
 
+  const handleSuccess = async () => {
+    await utils.tasks.invalidate();
+    toast("Success", {
+      icon: <Check className="mr-2 h-4 w-4" />,
+      description: `The task has been updated at ${new Date()}`,
+    });
+  };
+
   const deleteTask = api.tasks.deleteTask.useMutation({
-    onSuccess: async () => {
-      await utils.tasks.invalidate();
-      toast("Success", {
-        icon: <Check className="mr-2 h-4 w-4" />,
-        description: `The task has been deleted at ${new Date()}`,
-      });
-    },
+    onSuccess: handleSuccess,
   });
 
   const completeTask = api.tasks.completeTask.useMutation({
-    onSuccess: async () => {
-      await utils.tasks.invalidate();
-      toast("Success", {
-        icon: <Check className="mr-2 h-4 w-4" />,
-        description: `The task has been completed at ${new Date()}`,
-      });
-    },
+    onSuccess: handleSuccess,
   });
 
   const undoTask = api.tasks.undoTask.useMutation({
-    onSuccess: async () => {
-      await utils.tasks.invalidate();
-      toast("Success", {
-        icon: <Check className="mr-2 h-4 w-4" />,
-        description: `The task has been updated at ${new Date()}`,
-      });
-    },
+    onSuccess: handleSuccess,
   });
 
   const updateTask = api.tasks.updateTask.useMutation({
-    onSuccess: async () => {
-      await utils.tasks.invalidate();
-      toast("Success", {
-        icon: <Check className="mr-2 h-4 w-4" />,
-        description: `The task has been updated at ${new Date()}`,
-      });
-    },
+    onSuccess: handleSuccess,
   });
 
-  const handleTaskUpdate = ({ id, task }: { id: string; task: string }) => {
-    updateTask.mutate({
-      id: id,
-      task: task,
-    });
+  const isLoading =
+    deleteTask.isPending ||
+    completeTask.isPending ||
+    undoTask.isPending ||
+    updateTask.isPending;
+
+  const handleTaskUpdate = async (taskToSave: string) => {
+    if (taskToSave.length > 30) {
+      toast("Failed", {
+        icon: <Check className="mr-2 h-4 w-4" />,
+        description: "Task cannot be more than 30 characters",
+      });
+      return;
+    }
+
+    if (taskToSave && taskToSave !== task) {
+      updateTask.mutate({
+        id,
+        task: taskToSave,
+      });
+    }
   };
 
   if (!task) {
@@ -92,13 +94,14 @@ export function TasksCard({ id, task, isComplete }: Task) {
   return (
     <Card className="relative w-full p-0 transition-all hover:shadow-md">
       <Editable.Root
-        defaultValue={task!}
-        onSubmit={() => handleTaskUpdate({ id: id, task: newTaskValue })}
-        placeholder="Enter your text here"
+        defaultValue={task}
+        onSubmit={() => handleTaskUpdate(newTaskValue)}
+        placeholder="Enter your task here"
+        disabled={isInputInvalid}
       >
         <CardContent className="pt-6">
           <div className="flex items-center gap-4">
-            <div className="">
+            <div>
               <Editable.Area className="flex items-center gap-4">
                 {isComplete ? (
                   <CircleCheck className="h-5 w-5 text-green-500" />
@@ -112,15 +115,25 @@ export function TasksCard({ id, task, isComplete }: Task) {
                   )}
                 />
                 <Editable.Input
-                  onChange={(e) => setNewTaskValue(e.currentTarget.value)}
+                  onChange={(e) => {
+                    const value = e.currentTarget.value;
+                    setNewTaskValue(value);
+                    setIsInputInvalid(value.length > 30);
+                  }}
                 />
               </Editable.Area>
               <Editable.Toolbar>
                 <Editable.Submit asChild>
-                  <Button size="sm">Save</Button>
+                  <Button size="sm" disabled={isInputInvalid}>
+                    Save
+                  </Button>
                 </Editable.Submit>
                 <Editable.Cancel asChild>
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsInputInvalid(false)}
+                  >
                     Cancel
                   </Button>
                 </Editable.Cancel>
@@ -140,14 +153,9 @@ export function TasksCard({ id, task, isComplete }: Task) {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => undoTask.mutate({ id: id })}
+                onClick={() => undoTask.mutate({ id })}
                 className="text-muted-foreground"
-                disabled={
-                  deleteTask.isPending ||
-                  completeTask.isPending ||
-                  undoTask.isPending ||
-                  updateTask.isPending
-                }
+                disabled={isLoading || isInputInvalid}
               >
                 <Undo className="h-5 w-5" />
                 <span className="sr-only">Undo</span>
@@ -156,14 +164,9 @@ export function TasksCard({ id, task, isComplete }: Task) {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => completeTask.mutate({ id: id })}
+                onClick={() => completeTask.mutate({ id })}
                 className="text-muted-foreground"
-                disabled={
-                  deleteTask.isPending ||
-                  completeTask.isPending ||
-                  undoTask.isPending ||
-                  updateTask.isPending
-                }
+                disabled={isLoading || isInputInvalid}
               >
                 <Check className="h-5 w-5" />
                 <span className="sr-only">Mark As Complete</span>
@@ -174,12 +177,7 @@ export function TasksCard({ id, task, isComplete }: Task) {
                 variant="outline"
                 size="sm"
                 className="text-muted-foreground"
-                disabled={
-                  deleteTask.isPending ||
-                  completeTask.isPending ||
-                  undoTask.isPending ||
-                  updateTask.isPending
-                }
+                disabled={isLoading || isInputInvalid}
               >
                 <Pencil className="h-4 w-4" />
                 <span className="sr-only">Edit</span>
@@ -190,13 +188,8 @@ export function TasksCard({ id, task, isComplete }: Task) {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={(): void => {}}
                   className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                  disabled={
-                    deleteTask.isPending ||
-                    completeTask.isPending ||
-                    undoTask.isPending
-                  }
+                  disabled={isLoading || isInputInvalid}
                 >
                   <Trash2 className="h-4 w-4" />
                   <span className="sr-only">Delete todo</span>
@@ -207,7 +200,7 @@ export function TasksCard({ id, task, isComplete }: Task) {
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
                     This action cannot be undone. This will permanently delete
-                    your account and remove your data from our servers.
+                    your task.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -215,7 +208,7 @@ export function TasksCard({ id, task, isComplete }: Task) {
                     Cancel
                   </AlertDialogCancel>
                   <AlertDialogAction
-                    onClick={() => deleteTask.mutate({ id: id })}
+                    onClick={() => deleteTask.mutate({ id })}
                     disabled={deleteTask.isPending}
                   >
                     Continue

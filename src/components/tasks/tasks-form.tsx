@@ -11,7 +11,6 @@ import { Check } from "lucide-react";
 
 export function TasksForm({ className }: React.ComponentProps<"form">) {
   const [task, setTask] = React.useState<string>("");
-  const [limit, setLimit] = React.useState<boolean>(false);
 
   const utils = api.useUtils();
 
@@ -28,7 +27,6 @@ export function TasksForm({ className }: React.ComponentProps<"form">) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (task.length > 30) {
       toast("Fail", {
         icon: <Check className="mr-2 h-4 w-4" />,
