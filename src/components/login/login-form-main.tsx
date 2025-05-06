@@ -9,7 +9,7 @@ export function LoginFormMain({
 }: React.ComponentPropsWithoutRef<"div">) {
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-5">
         <div className="flex flex-col items-center gap-2">
           <a href="#" className="flex flex-col items-center gap-2 font-medium">
             <div className="flex h-8 w-8 items-center justify-center rounded-md">
