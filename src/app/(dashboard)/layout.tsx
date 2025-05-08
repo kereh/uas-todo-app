@@ -9,7 +9,7 @@ export default function DashboardLayout({
   return (
     <section>
       <SidebarProvider>
-        <SidebarApp variant="floating" />
+        <SidebarApp variant="inset" />
         <SidebarInset>
           <BreadCrumbsMain />
           <main className="container p-4">{children}</main>
