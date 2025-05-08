@@ -40,15 +40,7 @@ declare module "next-auth" {
 export const authConfig = {
   providers: [
     DiscordProvider,
-    GoogleProvider({
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
-        },
-      },
-    }),
+    GoogleProvider,
     /**
      * ...add more providers here.
      *
