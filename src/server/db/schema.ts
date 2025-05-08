@@ -12,7 +12,10 @@ export const tasks = createTable("tasks", (d) => ({
     .$defaultFn(() => crypto.randomUUID()),
   task: d.varchar({ length: 30 }).notNull(),
   isComplete: d.boolean().default(false),
-  createdBy: d.varchar({ length: 255 }).notNull(),
+  createdBy: d
+    .varchar({ length: 255 })
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
 }));
 
 export const users = createTable("user", (d) => ({
